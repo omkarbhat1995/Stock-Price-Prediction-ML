@@ -59,7 +59,14 @@ stock-price-regression-ml/
 
 - Plots the full historical timeline (`Close, MA_7, MA_30`) alongside the model evaluation table.
 ---
+## Data Storage Overview
+When `python -m src.train` runs, the combined multi-stock dataset is saved to:
 
+- `data/processed/engineered_stocks.parquet` — Full combined & feature-engineered dataset across all loaded tickers (automatically falls back to engineered_stocks.csv if pyarrow is unavailable).
+
+- `data/processed/engineered_stocks_sample.csv` — 5,000-row CSV preview of the engineered dataset.
+
+- `models/ticker_metadata.json` — Lightweight index of each ticker's latest trading day values used to auto-populate the Streamlit frontend instantly.
 
 ---
 ## Quick Start
@@ -72,7 +79,8 @@ pip install -r requirements.txt
 ```
 
 ### 2. Add Your Stock CSV Files
-Place up to 1,000+ Yahoo Finance-format CSV files (`Date, Open, High, Low, Close, Volume`) inside `data/raw/`. Each filename (e.g., `AAPL.csv`, `IOT.csv`) is automatically parsed as the company ticker.
+- Place up to 1,000+ Yahoo Finance-format CSV files (`Date, Open, High, Low, Close, Volume`) inside `data/raw/`. Each filename (e.g., `AAPL.csv`, `IOT.csv`) is automatically parsed as the company ticker.
+- (Optional) Place `metadata_stocks.csv` in `data/metadata_stocks.csv` (outside `data/raw/`) to enable full company names and Exchange/Currency/Type badges in the UI.
 
 ### 3. Run the Training & Evaluation Pipeline
 ```bash
