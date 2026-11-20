@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Large Datasets & Model Artifacts (keep sample data, ignore bulk 1,000+ CSVs)
+data/raw/*.csv
+!data/raw/IOT.csv
+data/processed/*.parquet
+models/*.joblib
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
