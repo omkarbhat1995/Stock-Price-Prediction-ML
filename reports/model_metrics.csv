@@ -1,0 +1,5 @@
+Model,CV_MAE_Return,Test_MAE_Price,Test_MSE_Price,Test_RMSE_Price,Test_R2_Price
+Naive Baseline (Close_t),,4.3722,147.5347,12.1464,0.9809
+Decision Tree Regressor,0.05969,4.3814,132.9318,11.5296,0.9828
+Polynomial Regression (Deg 2),0.061979,4.4872,129.6655,11.3871,0.9832
+Linear Regression,0.06153,4.5916,128.5993,11.3402,0.9833
