@@ -59,6 +59,7 @@ stock-price-regression-ml/
 
 - Plots the full historical timeline (`Close, MA_7, MA_30`) alongside the model evaluation table.
 ---
+
 ## Data Storage Overview
 When `python -m src.train` runs, the combined multi-stock dataset is saved to:
 
@@ -79,8 +80,7 @@ pip install -r requirements.txt
 ```
 
 ### 2. Add Your Stock CSV Files
-- Place up to 1,000+ Yahoo Finance-format CSV files (`Date, Open, High, Low, Close, Volume`) inside `data/raw/`. Each filename (e.g., `AAPL.csv`, `IOT.csv`) is automatically parsed as the company ticker.
-- (Optional) Place `metadata_stocks.csv` in `data/metadata_stocks.csv` (outside `data/raw/`) to enable full company names and Exchange/Currency/Type badges in the UI.
+Place up to 1,000+ Yahoo Finance-format CSV files (`Date, Open, High, Low, Close, Volume`) inside `data/raw/`. Each filename (e.g., `AAPL.csv`, `IOT.csv`) is automatically parsed as the company ticker.
 
 ### 3. Run the Training & Evaluation Pipeline
 ```bash
@@ -105,14 +105,17 @@ pytest
 ```
 
 ---
+## Benchmark Results (996-Stock Global Run)
 
-## Sample Benchmark Results (`IOT.csv` Single-Stock Baseline)
+Trained on **996 valid equities** (**5,890,747 raw rows** → **5,829,532 engineered rows**; 4 tickers skipped for having fewer than 40 valid rows: `HKD`, `HLN`, `INTR`, `PSNYW`).
 
 | Model | CV MAE (Return) | Test MAE ($) | Test MSE ($²) | Test RMSE ($) | Test R² |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| Naive Baseline (`Close_t`) | — | 0.4815 | 0.3144 | 0.5607 | 0.7471 |
-| Decision Tree Regressor | 0.0542 | 0.8725 | 0.9832 | 0.9916 | 0.2091 |
-| Linear Regression | 0.0767 | 0.8849 | 1.0388 | 1.0192 | 0.1643 |
-| Polynomial Regression (Deg 2) | 0.0662 | 1.0379 | 1.4490 | 1.2037 | -0.1657 |
+| Naive Baseline (`Close_t`) | — | 1.2992 | 10.7449 | 3.2779 | 0.9992 |
+| Decision Tree Regressor | 0.0170 | 1.3015 | 13.5673 | 3.6834 | 0.9990 |
+| Linear Regression | 0.0170 | 2.1234 | 27.6515 | 5.2585 | 0.9980 |
+| Polynomial Regression (Deg 2) | 0.0984 | 5.5484 | 722.3737 | 26.8770 | 0.9485 |
 
-See `reports/model_evaluation_report.md` for a detailed breakdown of feature importance, regime shift, and short-term forecasting limitations.
+**Best ML Model:** `Decision Tree Regressor` (`Test MAE = $1.3015`, `Test R² = 0.9990`), tracking within **0.18%** of the Naive Persistence Baseline's MAE across ~1.17M out-of-sample test rows.
+
+See `reports/model_evaluation_report.md` for detailed error analysis, feature importance findings, and short-term forecasting recommendations.

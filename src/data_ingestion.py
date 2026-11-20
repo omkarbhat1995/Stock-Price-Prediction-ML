@@ -22,7 +22,14 @@ def load_single_stock(file_path: Path) -> Optional[pd.DataFrame]:
         return None
 
     df = df[REQUIRED_COLUMNS].copy()
-    df["Date"] = pd.to_datetime(df["Date"], format="mixed", dayfirst=True, errors="coerce")
+    raw_dates = df["Date"].astype(str).str.strip()
+    parsed_dates = None
+    for fmt in ("%Y-%m-%d", "%d-%m-%Y", "%m-%d-%Y", "%Y/%m/%d", "%d/%m/%Y", "%m/%d/%Y"):
+        attempt = pd.to_datetime(raw_dates, format=fmt, errors="coerce")
+        if attempt.notna().mean() > 0.95:
+            parsed_dates = attempt
+            break
+    df["Date"] = parsed_dates if parsed_dates is not None else pd.to_datetime(raw_dates, errors="coerce")
     df = df.dropna(subset=["Date"]).sort_values("Date").drop_duplicates(subset=["Date"])
 
     for col in ["Open", "High", "Low", "Close", "Volume"]:
