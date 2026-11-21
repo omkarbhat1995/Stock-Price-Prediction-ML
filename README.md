@@ -4,6 +4,7 @@
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3%2B-orange.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.30%2B-red.svg)
 [![Dataset: Kaggle](https://img.shields.io/badge/Dataset-Kaggle-20BEFF?logo=kaggle&logoColor=white)](https://www.kaggle.com/datasets/liewyousheng/historical-stock-dataset)
+
 An end-to-end, production-structured machine learning project designed to ingest **1,000+ historical stock OHLCV CSV files**, engineer scale-invariant technical indicators, train and cross-validate regression models globally, and serve next-day price estimates through an interactive **Streamlit** frontend.
 
 ---
