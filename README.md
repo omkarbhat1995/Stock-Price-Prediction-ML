@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3%2B-orange.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.30%2B-red.svg)
-
+[![Dataset: Kaggle](https://img.shields.io/badge/Dataset-Kaggle-20BEFF?logo=kaggle&logoColor=white)](https://www.kaggle.com/datasets/liewyousheng/historical-stock-dataset)
 An end-to-end, production-structured machine learning project designed to ingest **1,000+ historical stock OHLCV CSV files**, engineer scale-invariant technical indicators, train and cross-validate regression models globally, and serve next-day price estimates through an interactive **Streamlit** frontend.
 
 ---
@@ -79,8 +79,19 @@ source .venv/bin/activate      # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Add Your Stock CSV Files
-Place up to 1,000+ Yahoo Finance-format CSV files (`Date, Open, High, Low, Close, Volume`) inside `data/raw/`. Each filename (e.g., `AAPL.csv`, `IOT.csv`) is automatically parsed as the company ticker.
+### 2. Download & Add the Dataset
+Download the **Historical Stock Dataset** from Kaggle:
+- **Source:** [Historical Stock Dataset on Kaggle](https://www.kaggle.com/datasets/liewyousheng/historical-stock-dataset)
+
+**Option A — Manual Download:**
+1. Download and unzip the archive from the Kaggle link above.
+2. Place all stock CSV files (`Date, Open, High, Low, Close, Volume`) inside `data/raw/` (flat or in subfolders). Each filename (e.g., `AAPL.csv`, `RTX.csv`) is automatically parsed as the ticker symbol.
+3. Place `metadata_stocks.csv` in `data/metadata_stocks.csv` (outside `data/raw/`) to enable full company names and Exchange/Currency/Type badges in the Streamlit UI.
+
+**Option B — Kaggle CLI:**
+```bash
+kaggle datasets download -d liewyousheng/historical-stock-dataset -p data/raw --unzip
+```
 
 ### 3. Run the Training & Evaluation Pipeline
 ```bash
